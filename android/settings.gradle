@@ -12,3 +12,6 @@ project(':react-native-vector-icons').projectDir = new File(rootProject.projectD
 
 include ':react-native-google-cast'
 project(':react-native-google-cast').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-cast/android')
+
+include ':react-native-orientation', ':app'
+project(':react-native-orientation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-orientation/android')

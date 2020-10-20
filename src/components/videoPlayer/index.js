@@ -12,10 +12,16 @@ justify-content:center;
 /* border:1px solid white; */
 `
 
+const ScreenWrapper = styled.View`
+/* flex: 1; */
+background-color: rgba(0,0,0,0.2);
+z-index: 99;
+`
+
 const ControlContainer = styled.View`
 flex: 1;
 max-height: 100px;
-/* border:1px solid lime; */
+border:1px solid lime;
 `
 
 const Touchable = styled.TouchableOpacity`
@@ -28,6 +34,10 @@ font-size:40px;
 color: white;
 `
 
+const FullScreenIcon = styled(Icon)`
+font-size:40px;
+color: black;
+`
 
 
 
@@ -39,7 +49,7 @@ const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
 const BUFFERING_STRING = "...buffering...";
 const RATE_SCALE = 3.0;
-const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
+const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 6.0 - FONT_SIZE * 2;
 export const VideoPlayer = props => {
 let playbackInstance = null
 const [playbackState, setPlaybackState] = useState(null)
@@ -85,6 +95,12 @@ const  registerListeners = () => {
                 isPlaying: action.isPlaying,
                 muted: action.isMuted,
                 playbackInstancePosition: action.playbackInstancePosition
+            }
+        case 'fullScreen':
+            return {
+                ...prevState,
+                videoHeight: action.height,
+                videoWidth: action.width
             }
       }
     },{
@@ -171,7 +187,10 @@ showVideo: false,
         console.log(`ON ERROR : ${error}`);
       };
 
-   
+   const setFullScreen = () => {
+       dispatch({type: 'fullScreen', height: DEVICE_HEIGHT, width: DEVICE_WIDTH})
+   }
+
     return (
         <>
         <Container>
@@ -208,6 +227,17 @@ showVideo: false,
           <ControlContainer>
               <Touchable onPress={()=> _onPlayPausePressed()}>
                 <StyledIcon name={state.isPlaying ? "pause": "play"}/>
+              </Touchable>
+              <Touchable
+              onPress={()=> setFullScreen()} 
+              style={{
+                  position:'absolute',
+                  right:20,
+                  top: '30%'
+              }}>
+              <FullScreenIcon 
+              name="scan-outline"
+              />
               </Touchable>
           </ControlContainer>
           </View>

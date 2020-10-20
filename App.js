@@ -9,9 +9,28 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {DrawerNavigator} from './src/navigation';
-
+import {Easing} from 'react-native-reanimated'
 const Stack = createStackNavigator();
-console.log("unimodules",Constants.systemFonts)
+const openConfig = {
+  animation: 'spring',
+  config: {
+    stiffness: 1000,
+    damping: 50,
+    mass: 3,
+    overshootClamping: false,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
+
+
+const closeConfig = {
+  animation: 'timing',
+  config: {
+    duration: 500,
+    easing: Easing.linear
+  },
+};
 const App = () => {
   return (
     <>
@@ -20,7 +39,17 @@ const App = () => {
         <PaperProvider>
           <SafeAreaProvider>
             <NavigationContainer>
-              <Stack.Navigator headerMode="screen">
+              <Stack.Navigator 
+              headerMode="screen"
+              screenOptions={{
+                gestureEnabled: true,
+                gestureDirection: "vertical",
+                transitionSpec: {
+                  open: openConfig,
+                  close: closeConfig
+                }
+              }} 
+              >
                 <Stack.Screen 
                 name="Root"
                 component={DrawerNavigator}

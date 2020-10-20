@@ -20,6 +20,7 @@ import org.unimodules.core.interfaces.SingletonModule;
 import com.facebook.react.bridge.JSIModulePackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.github.yamill.orientation.OrientationPackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
@@ -45,6 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
           new GoogleCastPackage();
           new SplashScreenReactPackage();
           new VectorIconsPackage();
+          new OrientationPackage()
           return packages;
         }
 

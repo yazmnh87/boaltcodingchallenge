@@ -32,7 +32,7 @@ const Header = styled.View`
 
 
 export const DrawerContent = (props) => {
-
+console.log("name?",props.state.routeNames[1])
 
   return (
     <Container>
@@ -46,6 +46,11 @@ export const DrawerContent = (props) => {
             navIcon
             {...props.navigation}
             label={props.state.routeNames[0]}
+          />
+          <DrawerItem
+            navIcon
+            {...props.navigation}
+            label={props.state.routeNames[1]}
           />
         </SubContainer>
       </TopSectionGroup>

@@ -198,6 +198,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     implementation project(':react-native-google-cast')
     implementation "com.google.android.gms:play-services-cast-framework:${rootProject.ext.castFrameworkVersion}"
+    compile project(':react-native-orientation')
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

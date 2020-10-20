@@ -1,29 +1,15 @@
-# Foobar
+# WELCOME, THANK YOU BOALT FOR THE OPPORTUNITY
 
-Foobar is a Python library for dealing with word pluralization.
 
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
-pip install foobar
+```
+Thank you for reviewing my coding challenge
+requirements:
+-Create an Android app, That is publicy available
+-Use React Native
+-Allow the user to watch a video(With Full Screen Option) 
+-Allow user to stream on a TV
+-Include 1 to 2 animations when switching screens
+-
 ```
 
-## Usage
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
