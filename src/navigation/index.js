@@ -9,14 +9,11 @@ export const DrawerNavigator = (props) => {
     // console.log("drawerrProps",props.route.params)
   },[])
   return (
-    <Drawer.Navigator style={{
-     
-    }} initialRouteName="Home" drawerType={'front'} hideStatusBar={true} drawerContent={(props)=> <DrawerContent {...props}/>}>
+    <Drawer.Navigator initialRouteName="Home" drawerType={'front'} hideStatusBar={true} drawerContent={(props)=> <DrawerContent {...props}/>}>
       <Drawer.Screen 
       name="Home" 
       component={RootStack}
       />
-  
     </Drawer.Navigator>
   );
 };

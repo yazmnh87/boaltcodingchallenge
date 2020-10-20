@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 // import SplashScreen from 'react-native-splash-screen';
+import { Constants } from 'react-native-unimodules';
 import { StatusBar } from 'react-native';
 import Theme from './src/providers/ThemeProvider'
 import {Provider as PaperProvider} from 'react-native-paper';
@@ -10,6 +11,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {DrawerNavigator} from './src/navigation';
 
 const Stack = createStackNavigator();
+console.log("unimodules",Constants.systemFonts)
 const App = () => {
   return (
     <>
@@ -18,7 +20,7 @@ const App = () => {
         <PaperProvider>
           <SafeAreaProvider>
             <NavigationContainer>
-              <Stack.Navigator headerMode="scene">
+              <Stack.Navigator headerMode="screen">
                 <Stack.Screen 
                 name="Root"
                 component={DrawerNavigator}

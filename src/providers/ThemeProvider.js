@@ -8,8 +8,9 @@ import {ThemeProvider} from 'styled-components'
  const Theme = props => {
 const theme  = {
       colors: {
-      primary: '#1C3463',
+      primary: '#112235',
       secondary: '#D7711E',
+      grey: '#828789'
   
     },
     fonts:{

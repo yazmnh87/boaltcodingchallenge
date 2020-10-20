@@ -27,8 +27,9 @@ const StyledText = styled.Text`
   /* border: 1px solid red; */
 `;
 
-export const StyledIcon = styled(Icon)`
-color: ${props=>  props.theme.colors.white};
+const StyledIcon = styled(Icon)`
+font-size:40px;
+color: white;
 `
 
 

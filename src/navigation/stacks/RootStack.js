@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from '../../screens/Home'
-import {HeadMain} from '../../components/Header/HeadMain'
+import Home from '../../screens/home'
+import {HeadMain} from '../../components/Header'
 
 
 
@@ -12,7 +12,7 @@ export function RootStack() {
     <Stack.Navigator headerMode="screen">
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={({ navigation, route }) => ({
           header: ({scene, previous, navigation}) => (
             <HeadMain
