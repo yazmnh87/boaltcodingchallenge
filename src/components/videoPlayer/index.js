@@ -3,25 +3,25 @@ import styled from 'styled-components'
 import {View} from 'react-native'
 import { Audio, Video } from 'expo-av';
 import GoogleCast, { CastButton } from 'react-native-google-cast'
+import Orientation from 'react-native-orientation';
 import {Dimensions, StyleSheet} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {Progress} from './Progress'
 const Container = styled.View`
-flex: 3;
+flex: ${props=> props.fullscreen ? 1 : 3};
 justify-content:center;
 /* border:1px solid white; */
 `
 
-const ScreenWrapper = styled.View`
-/* flex: 1; */
-background-color: rgba(0,0,0,0.2);
-z-index: 99;
+const BottomContainer = styled.View`
+flex: ${props => !props.fullscreen ? 1 : 0};
 `
 
 const ControlContainer = styled.View`
 flex: 1;
 max-height: 100px;
-border:1px solid lime;
+/* border:1px solid lime; */
+display: ${props=> !props.fullscreen ? 'flex' : 'none'};
 `
 
 const Touchable = styled.TouchableOpacity`
@@ -34,9 +34,19 @@ font-size:40px;
 color: white;
 `
 
-const FullScreenIcon = styled(Icon)`
-font-size:40px;
-color: black;
+const FullScreenTouchable = styled.TouchableOpacity`
+height: 40px;
+width: 80px;
+border-radius: 8px;
+background-color:${props=> props.theme.colors.primary};
+/* border:1px solid red; */
+`
+
+const FullScreenTouchableText = styled.Text`
+font-size:10px;
+color: white;
+margin: auto 0;
+text-align: center;
 `
 
 
@@ -50,6 +60,7 @@ const LOADING_STRING = "... loading ...";
 const BUFFERING_STRING = "...buffering...";
 const RATE_SCALE = 3.0;
 const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 6.0 - FONT_SIZE * 2;
+
 export const VideoPlayer = props => {
 let playbackInstance = null
 const [playbackState, setPlaybackState] = useState(null)
@@ -100,7 +111,8 @@ const  registerListeners = () => {
             return {
                 ...prevState,
                 videoHeight: action.height,
-                videoWidth: action.width
+                videoWidth: action.width,
+                fullscreen: action.fullscreen
             }
       }
     },{
@@ -167,6 +179,7 @@ showVideo: false,
        const _onReadyForDisplay = e => {
            console.log("anything returned", e.status.durationMillis)
            dispatch({type: 'readyForPlay', playbackInstanceDuration: Math.round(e.status.durationMillis /1000)  })
+          //  playbackInstance.presentFullscreenPlayer()
        }
 
       const _onFullscreenUpdate = event => {
@@ -188,26 +201,27 @@ showVideo: false,
       };
 
    const setFullScreen = () => {
-       dispatch({type: 'fullScreen', height: DEVICE_HEIGHT, width: DEVICE_WIDTH})
+     playbackInstance.presentFullscreenPlayer()
+      //  dispatch({type: 'fullScreen', height: DEVICE_HEIGHT, width: DEVICE_WIDTH, fullscreen: true})
+       Orientation.lockToLandscape()
    }
 
     return (
         <>
-        <Container>
+        <Container fullscreen={state.fullscreen}>
             <Video
             source={{uri: "https://boaltcodingchallenge.s3-us-west-1.amazonaws.com/Countdown+To+Rocket+Launching.mp4"}}
             ref={ref =>{
                 playbackInstance = ref
             }}
             style={[
-              styles.video,
               {
                 opacity: state.showVideo ? 1.0 : 0.2,
                 width: state.videoWidth,
                 height: state.videoHeight
               }
             ]}
-            resizeMode={Video.RESIZE_MODE_CONTAIN}
+            resizeMode={!state.fullscreen ? Video.RESIZE_MODE_CONTAIN : Video.RESIZE_MODE_COVER}
             onPlaybackStatusUpdate={_onPlaybackStatusUpdate}
             onLoadStart={_onLoadStart}
             onLoad={_onLoad}
@@ -215,32 +229,33 @@ showVideo: false,
             onFullscreenUpdate={_onFullscreenUpdate}
             onReadyForDisplay={_onReadyForDisplay}
             useNativeControls={state.useNativeControls}
+            Orientation={state.fullscreen ? 'landscape' : 'portrait'}
           />
           <CastButton style={{ width: 24, height: 24, borderColor:'red', borderWidth:1 }} />
         </Container>
-          <View style={{flex:1, justifyContent:'flex-end'}}>
-          <Progress
+          <BottomContainer fullscreen={state.fullscreen}  style={{flex:1, justifyContent:'flex-end'}}>
+          {/* <Progress
           duration={state.playbackInstanceDuration}
           progress={state.isPlaying ? state.playbackInstanceDuration - (state.playbackInstanceDuration - state.playbackInstancePosition) : 0}
           color={'white'}
-        />
-          <ControlContainer>
+        /> */}
+          <ControlContainer fullscreen={state.fullscreen}>
               <Touchable onPress={()=> _onPlayPausePressed()}>
                 <StyledIcon name={state.isPlaying ? "pause": "play"}/>
               </Touchable>
-              <Touchable
+              <FullScreenTouchable
               onPress={()=> setFullScreen()} 
               style={{
                   position:'absolute',
                   right:20,
                   top: '30%'
               }}>
-              <FullScreenIcon 
-              name="scan-outline"
-              />
-              </Touchable>
+              <FullScreenTouchableText>
+                FullScreen
+              </FullScreenTouchableText>
+              </FullScreenTouchable>
           </ControlContainer>
-          </View>
+          </BottomContainer>
           </>
     )
 }

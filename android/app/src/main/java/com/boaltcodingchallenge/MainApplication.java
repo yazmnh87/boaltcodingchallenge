@@ -46,7 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
           new GoogleCastPackage();
           new SplashScreenReactPackage();
           new VectorIconsPackage();
-          new OrientationPackage()
+          new OrientationPackage();
           return packages;
         }
 
